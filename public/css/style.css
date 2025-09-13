@@ -1,0 +1,82 @@
+/* style.css - estilos mínimos adicionales */
+body {
+  background: linear-gradient(135deg, #f8f9fa 60%, #ffe082 100%);
+  min-height: 100vh;
+}
+.navbar {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.card {
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  transition: transform 0.15s;
+}
+.card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+}
+.card-title {
+  font-size: 1.2rem;
+  color: #222;
+}
+.card-text {
+  color: #666;
+}
+.btn-agregar {
+  background: linear-gradient(90deg, #ffb300 60%, #ffd54f 100%);
+  color: #222;
+  border: none;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(255,179,0,0.08);
+}
+.btn-agregar:hover {
+  background: linear-gradient(90deg, #ffd54f 60%, #ffb300 100%);
+  color: #111;
+}
+.carrito-item {
+  background: #fffbe6;
+  border: 1px solid #ffe082;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border-radius: 12px;
+}
+.carrito-img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+.carrito-nombre {
+  font-size: 1.1rem;
+  color: #333;
+}
+.carrito-precio {
+  color: #ffb300;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.btn-remover {
+  font-size: 0.9rem;
+  background: #ff5252;
+  border: none;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(255,82,82,0.08);
+}
+.btn-remover:hover {
+  background: #d32f2f;
+}
+.offcanvas {
+  border-radius: 16px 0 0 16px;
+  box-shadow: -2px 0 16px rgba(0,0,0,0.08);
+}
+.table th, .table td {
+  vertical-align: middle;
+}
+.table th {
+  background: #ffe082;
+  color: #333;
+}
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
