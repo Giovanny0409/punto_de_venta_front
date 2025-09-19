@@ -1,0 +1,6 @@
+/* assets/css/main.css
+   Estilos generales de la aplicación y de la tienda */
+
+body { background: #f8f9fa; }
+.card img { height: 180px; object-fit: cover; }
+#contadorCarrito { font-size: 0.9rem; }
