@@ -5,14 +5,33 @@ require_once __DIR__ . '/../app/bootstrap.php';
 
 $sent = null; $error = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $correo  = $_POST['correo'] ?? '';
-    $asunto  = $_POST['asunto'] ?? 'Factura de su compra';
-    $mensaje = $_POST['mensaje'] ?? '';
+  $correo  = trim((string)($_POST['correo'] ?? ''));
+  $asunto  = (string)($_POST['asunto'] ?? 'Factura de su compra');
+  $mensaje = (string)($_POST['mensaje'] ?? '');
+
+  // Validación básica del email
+  if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+    $sent = false; $error = 'Correo inválido';
+  } else {
+    // Validar subida de archivo
     $archivoTmp = $_FILES['archivo']['tmp_name'] ?? null;
     $archivoNombre = $_FILES['archivo']['name'] ?? null;
-
-    $ok = MailService::send($correo, $asunto, nl2br($mensaje), $archivoTmp, $archivoNombre);
-    $sent = $ok; $error = $ok ? null : 'No se pudo enviar el correo.';
+    $archivoErr = $_FILES['archivo']['error'] ?? UPLOAD_ERR_NO_FILE;
+    if ($archivoErr !== UPLOAD_ERR_OK || !$archivoTmp || !is_uploaded_file($archivoTmp)) {
+      $sent = false; $error = 'Error al subir el archivo PDF';
+    } else {
+      // Validar tipo MIME básico
+      $finfo = new finfo(FILEINFO_MIME_TYPE);
+      $mime  = $finfo->file($archivoTmp) ?: '';
+      if (stripos($mime, 'pdf') === false && $mime !== 'application/pdf') {
+        $sent = false; $error = 'El archivo debe ser un PDF válido';
+      } else {
+        $ok = MailService::send($correo, $asunto, nl2br($mensaje), $archivoTmp, $archivoNombre);
+        $sent = $ok;
+        $error = $ok ? null : (MailService::lastError() ?: 'No se pudo enviar el correo.');
+      }
+    }
+  }
 }
 ?>
 <!doctype html>
@@ -36,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if($sent === true): ?>
               <div class="alert alert-success">✅ Factura enviada con éxito</div>
             <?php elseif($sent === false): ?>
-              <div class="alert alert-danger">❌ Error al enviar: <?= htmlspecialchars($error) ?></div>
+              <div class="alert alert-danger">❌ Error al enviar: <?= htmlspecialchars((string)$error) ?></div>
             <?php endif; ?>
             <form action="" method="POST" enctype="multipart/form-data">
               <div class="mb-3">
