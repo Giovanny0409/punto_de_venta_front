@@ -1,5 +1,13 @@
 {
-    "require": {
-        "phpmailer/phpmailer": "^6.10"
+  "require": {
+    "php": ">=8.0",
+    "phpmailer/phpmailer": "^6.8",
+    "dompdf/dompdf": "^3.0",
+    "stripe/stripe-php": "^17.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
     }
+  }
 }

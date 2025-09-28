@@ -1,66 +1,55 @@
 <?php
-// public/index.php
-// Página principal: lista de productos y botón para ver el carrito.
-require_once __DIR__ . '/../app/bootstrap.php';
+require_once __DIR__ . '/../app/Helpers/DB.php';
+require_once __DIR__ . '/../app/Helpers/PACClient.php';
+require_once __DIR__ . '/../app/Controllers/ProductController.php';
+require_once __DIR__ . '/../app/Controllers/OrderController.php';
+require_once __DIR__ . '/../app/Controllers/AuthController.php';
+use App\Controllers\ProductController;
+use App\Controllers\OrderController;
+use App\Controllers\AuthController;
+session_start();
+$page = $_GET['page'] ?? 'home';
+$id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$q = $_GET['q'] ?? null;
+$cat = $_GET['cat'] ?? null;
+$pc = new ProductController();
+$oc = new OrderController();
+$ac = new AuthController();
 
-$productos = ProductoController::lista();
-?>
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tienda - Carrito</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="index.php">Mi Tienda</a>
-        <div class="d-flex gap-2">
-          <a class="btn btn-outline-light" href="email.php">Enviar factura</a>
-          <a class="btn btn-outline-light" href="pos.php">POS</a>
-          <button class="btn btn-outline-light position-relative" id="btnVerCarrito">
-            Carrito <span class="badge bg-danger" id="contadorCarrito">0</span>
-          </button>
-        </div>
-      </div>
-    </nav>
-
-    <main class="container my-4">
-      <div class="row" id="productosGrid">
-        <?php foreach($productos as $p): ?>
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <img src="<?= htmlspecialchars($p['imagen']) ?>" class="card-img-top" alt="<?= htmlspecialchars($p['nombre']) ?>">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title"><?= htmlspecialchars($p['nombre']) ?></h5>
-              <p class="card-text small"><?= htmlspecialchars($p['descripcion']) ?></p>
-              <div class="mt-auto">
-                <p class="fw-bold">$
-                  <?= number_format($p['precio'],2) ?></p>
-                <button class="btn btn-primary w-100 btn-agregar" data-id="<?= $p['id'] ?>">Agregar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <?php endforeach; ?>
-      </div>
-    </main>
-
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Tu carrito</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-      </div>
-      <div class="offcanvas-body" id="carritoBody"></div>
-      <div class="p-3 border-top">
-        <a href="checkout.php" class="btn btn-success w-100">Ir a Checkout</a>
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/app.js"></script>
-  </body>
-  </html>
+if ($page === 'register') {
+    $ac->register();
+} elseif ($page === 'login') {
+    $ac->login();
+} elseif ($page === 'logout') {
+    $ac->logout();
+} elseif ($page === 'invoices') {
+    include __DIR__ . '/../app/Views/auth/invoices.php';
+} elseif ($page === 'home') {
+    $pc->home();
+} elseif ($page === 'category' && $id) {
+    $pc->listByCategory($id);
+} elseif ($page === 'products') {
+    if ($q) $pc->search($q, $cat ?: null);
+    else $pc->list();
+} elseif ($page === 'add_to_cart' && $id) {
+    $pc->addToCart($id);
+} elseif ($page === 'update_cart' && $id && isset($_GET['action'])) {
+    $pc->updateCart($id, $_GET['action']);
+} elseif ($page === 'cart') {
+    $pc->cart();
+} elseif ($page === 'edit_product' && $id) {
+    include __DIR__ . '/../app/Views/products/edit.php';
+} elseif ($page === 'checkout') {
+    // Forzar login antes de checkout
+    if (empty($_SESSION['user'])) {
+        header('Location: index.php?page=login&redirect=checkout');
+        exit;
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $oc->placeOrder();
+    } else {
+        $oc->checkoutForm();
+    }
+} else {
+    $pc->home();
+}
