@@ -1,9 +1,9 @@
 {
   "require": {
     "php": ">=8.0",
-    "phpmailer/phpmailer": "^6.8",
-    "dompdf/dompdf": "^3.0",
-    "stripe/stripe-php": "^17.6"
+    "phpmailer/phpmailer": "*",
+    "stripe/stripe-php": "^18.0",
+    "dompdf/dompdf": "*"
   },
   "autoload": {
     "psr-4": {

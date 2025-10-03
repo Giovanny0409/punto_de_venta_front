@@ -46,10 +46,38 @@ git push origin nombre-de-tu-rama
 
 
 🧪 Rama vat: uso experimental
-- Puedes usar vat para probar ideas sin afectar el flujo principal.
-- Se recomienda hacer PR desde vat hacia dev si alguna prueba resulta útil.
 
 📌 Buenas prácticas
-- Mantén tus ramas actualizadas con dev usando git pull.
-- Borra ramas locales y remotas que ya fueron fusionadas.
-- Usa etiquetas como feature/, fix/, hotfix/ para nombrar tus ramas.
+
+## Estructura reorganizada (backend / frontend)
+
+He reestructurado el proyecto en dos entradas principales: `backend/` y `frontend/`.
+
+- `backend/public/index.php` - Entrada para acciones de backend (controladores, API, administración).
+- `frontend/public/index.php` - Entrada pública del sitio que usa los controladores y vistas en `app/`.
+- `public/index.php` - Compatibility: reenvía a `frontend/public/index.php` si existe.
+
+Cómo ejecutar en tu entorno local (XAMPP):
+
+1. Apunta tu VirtualHost o DocumentRoot a `c:/xampp/htdocs/punto_de_venta_front/public`.
+2. Accede a `http://localhost/` para ver el frontend (se reenvía internamente).
+
+Notas:
+- Los archivos de aplicación (controllers, helpers y views) permanecen en `app/` y son usados por ambas entradas.
+- Las dependencias de Composer siguen en `vendor/` y son cargadas por los entrypoints.
+
+Probar localmente (XAMPP)
+
+1. Asegúrate de que `c:/xampp/htdocs/punto_de_venta_front/public` sea el DocumentRoot de tu VirtualHost o sitio en XAMPP.
+2. Reinicia Apache.
+3. Abre en el navegador: http://localhost/ — esto cargará `public/index.php` que reenvía al `frontend`.
+
+Comprobaciones que ya hice
+- Creé `backend/public/index.php` y `frontend/public/index.php`.
+- Moví controladores y helpers a `backend/app` y vistas a `frontend/app/Views`.
+- Actualicé `public/index.php` para mantener compatibilidad.
+
+Notas finales
+- Si quieres que mueva también `vendor/` dentro de `backend/`, dime y lo hago (recomiendo mantener `vendor/` en la raíz para simplicidad).
+- Si aparecen errores en tiempo de ejecución relacionados con rutas, comparte el log de Apache/PHP y lo depuro.
+
