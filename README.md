@@ -1,4 +1,4 @@
-# punto_de_venta_linux
+# Punto de Venta - Sistema Completo
 
 🧭 Flujo de trabajo con ramas Git: main, dev y vat
 Este proyecto utiliza un flujo de trabajo basado en ramas para mantener el código organizado y facilitar la colaboración. A continuación se describen las instrucciones para trabajar correctamente con las ramas main, dev y vat.
