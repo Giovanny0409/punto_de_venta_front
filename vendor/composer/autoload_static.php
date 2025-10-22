@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit117bc369351387701431bd54ab89961a
+class ComposerStaticInit1526ae475180751b6807329df763bafb
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -25,9 +25,18 @@ class ComposerStaticInit117bc369351387701431bd54ab89961a
         array (
             'FontLib\\' => 8,
         ),
+        'E' => 
+        array (
+            'Endroid\\QrCode\\' => 15,
+        ),
         'D' => 
         array (
             'Dompdf\\' => 7,
+            'DASPRiD\\Enum\\' => 13,
+        ),
+        'B' => 
+        array (
+            'BaconQrCode\\' => 12,
         ),
         'A' => 
         array (
@@ -60,9 +69,21 @@ class ComposerStaticInit117bc369351387701431bd54ab89961a
         array (
             0 => __DIR__ . '/..' . '/dompdf/php-font-lib/src/FontLib',
         ),
+        'Endroid\\QrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/endroid/qr-code/src',
+        ),
         'Dompdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
+        ),
+        'DASPRiD\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
+        'BaconQrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
         ),
         'App\\' => 
         array (
@@ -78,9 +99,9 @@ class ComposerStaticInit117bc369351387701431bd54ab89961a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit117bc369351387701431bd54ab89961a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit117bc369351387701431bd54ab89961a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit117bc369351387701431bd54ab89961a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1526ae475180751b6807329df763bafb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1526ae475180751b6807329df763bafb::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1526ae475180751b6807329df763bafb::$classMap;
 
         }, null, ClassLoader::class);
     }
