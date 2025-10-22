@@ -1,0 +1,2 @@
+# Test file to verify clean workflow
+echo "Testing branch workflow - $(date)" > test-file.txt
