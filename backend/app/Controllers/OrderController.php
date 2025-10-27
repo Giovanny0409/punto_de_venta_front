@@ -212,11 +212,11 @@ class OrderController {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com'; 
                     $mail->SMTPAuth = true;
-                    $mail->Username = getenv('SMTP_USER') ?: 'puntodeventaumb@gmail.com'; 
-                    $mail->Password = getenv('SMTP_PASS') ?: 'gficrgeogbibtaae'; 
+                    $mail->Username = getenv('SMTP_USER') ?: 'clinivet.191@gmail.com'; 
+                    $mail->Password = getenv('SMTP_PASS') ?: 'fwjbmilrhigelkmy'; 
                     $mail->SMTPSecure = 'tls';
                     $mail->Port = 587;
-                    $mail->setFrom('puntodeventaumb@gmail.com', 'Clinvet');
+                    $mail->setFrom('clinivet.191@gmail.com', 'Clinvet');
                     $mail->addAddress($email, $name);
                     $mail->Subject = 'Factura electr\u00f3nica de tu compra en MiTienda';
                     $mail->isHTML(true);
@@ -246,7 +246,7 @@ class OrderController {
                     $message = "Gracias por tu compra!\n\n";
                     $message .= "Adjuntamos tu factura electr\u00f3nica en PDF (si tu servidor soporta adjuntos por mail()).\n";
                     $message .= "UUID: $uuid\nSerie/Folio: $serie-$folio\nTotal: $total\n";
-                    $headers = "From: Clinvet <" . (getenv('SMTP_USER') ?: 'puntodeventaumb@gmail.com') . ">\r\n" .
+                    $headers = "From: Clinvet <" . (getenv('SMTP_USER') ?: 'clinivet.191@gmail.com') . ">\r\n" .
                                "MIME-Version: 1.0\r\n" .
                                "Content-Type: text/plain; charset=UTF-8\r\n";
                     $mailSent = false;
